@@ -25,6 +25,7 @@ public class Player extends AliveObjects{
 		this.width = width;
 		this.height = height;
 		this.handler = handler;
+		this.id = id;
 		velY = 1;
 	}
 	
@@ -33,7 +34,6 @@ public class Player extends AliveObjects{
 	 */
 	public void update() {
 		collision();
-		System.out.println(velY);
 		x += velX;
 		y += velY;
 		velY *= gravity;
@@ -43,7 +43,18 @@ public class Player extends AliveObjects{
 		for(int i = 0; i<handler.envObjects.size(); i++){
 			EnvironmentObjects object = handler.envObjects.get(i);
 			if(getBounds().intersects(object.getBounds()) && object.id == ID.Env){
-				velY= 0;
+				
+				/*
+				 *  Denna if-elsen ska fixas senare,
+				 *  den ska göra att om man hoppar och får något i huvudet ska 
+				 *  man fall och om man landar på något ska man inte åka igenom
+				 */
+				if(velY>0){
+					velY = 0;
+				}else{
+					velY = 0;
+				}
+				
 				
 			}
 		}

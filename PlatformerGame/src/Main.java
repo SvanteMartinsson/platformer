@@ -28,7 +28,8 @@ public class Main extends Canvas{
 		Window window = new Window(this, TITLE, WIDTH, HEIGHT);
 		this.createBufferStrategy(3);
 		bs = this.getBufferStrategy();
-		handler.addObject(new Player(200, 100, Color.green, 32, 75, handler, ID.Player));
+		this.addKeyListener(new KeyInput(handler));
+		handler.addObject(new Player(200, 0, Color.green, 32, 75, handler, ID.Player));
 		handler.addEnv(new Stone(0, 600, 900, 30, ID.Env));
 		gameLoop();
 	}
@@ -43,8 +44,34 @@ public class Main extends Canvas{
 	 */
 	public void gameLoop(){
 		while(isRunning){
-			render();
-			update();
+			 long lastTime = System.nanoTime();
+		        double amountOfTicks = 60.0;
+		        double ns = 1000000000 / amountOfTicks;
+		        double delta = 0;
+		        long timer = System.currentTimeMillis();
+		        int frames = 0;
+		        while(isRunning)
+		        {
+		                    long now = System.nanoTime();
+		                    delta += (now - lastTime) / ns;
+		                    lastTime = now;
+		                    while(delta >=1)
+		                            {
+		                                update();
+		                                delta--;
+		                            }
+		                            if(isRunning)
+		                                render();
+		                            frames++;
+		                            
+		                            if(System.currentTimeMillis() - timer > 1000)
+		                            {
+		                                timer += 1000;
+		                               // System.out.println("FPS: "+ frames);
+		                                frames = 0;
+		                            }
+		        }
+		                
 		}
 	}
 	
