@@ -13,7 +13,6 @@ public class KeyInput extends KeyAdapter{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		System.out.println("asdf");
 		for(int i = 0; i<handler.aliveObjects.size(); i++){
 			AliveObjects object = handler.aliveObjects.get(i);
 			if(object.id == ID.Player){
@@ -23,8 +22,14 @@ public class KeyInput extends KeyAdapter{
 				if(key == KeyEvent.VK_A){
 					object.velX = -2;
 				}
+				if(key == KeyEvent.VK_W){
+					object.velY = -2;
+				}
+				if(key == KeyEvent.VK_S){
+					object.velY = 2;
+				}
 				if(key == KeyEvent.VK_SPACE){
-					
+					object.jumping = true;
 				}
 			}
 		}

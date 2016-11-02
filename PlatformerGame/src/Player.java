@@ -5,9 +5,15 @@ import java.awt.Rectangle;
 public class Player extends AliveObjects{
 
 	private double gravity = 1.02;
-	
+
+	private int fallingSpeed = 0;
+
+	private boolean isJumping;
+
+	private boolean isOnGround = false;
+
 	Handler handler;
-	
+
 	/**
 	 * Setup for the player
 	 * @param x x-cordinate
@@ -27,8 +33,9 @@ public class Player extends AliveObjects{
 		this.handler = handler;
 		this.id = id;
 		velY = 1;
+		this.jumping = false;
 	}
-	
+
 	/**
 	 * Updates the player
 	 */
@@ -36,26 +43,22 @@ public class Player extends AliveObjects{
 		collision();
 		x += velX;
 		y += velY;
-		velY *= gravity;
+
+
+
+		if(isOnGround){
+			jump();
+		}else{
+			velY *= gravity;
+		}
 	}
-	
+
 	public void collision(){
 		for(int i = 0; i<handler.envObjects.size(); i++){
 			EnvironmentObjects object = handler.envObjects.get(i);
 			if(getBounds().intersects(object.getBounds()) && object.id == ID.Env){
-				
-				/*
-				 *  Denna if-elsen ska fixas senare,
-				 *  den ska göra att om man hoppar och får något i huvudet ska 
-				 *  man fall och om man landar på något ska man inte åka igenom
-				 */
-				if(velY>0){
-					velY = 0;
-				}else{
-					velY = 0;
-				}
-				
-				
+				isOnGround = true;
+				y =515;
 			}
 		}
 	}
@@ -64,17 +67,34 @@ public class Player extends AliveObjects{
 	 * Renders the player
 	 */
 	public void render(Graphics g) {
-		
+
 		g.setColor(color);
 		g.fillRect(x, y, width, height);
 	}
-	
+
 	/**
 	 * This method returns a rectangle around the player which will help with collision
 	 */
 	public Rectangle getBounds(){
 		return new Rectangle(x, y, width, height);
-		
+
+	}
+
+
+
+	public void jump() {
+		if(jumping){
+			System.out.println("test");
+			while(jumping){
+				fallingSpeed += gravity*-1;
+				velY = fallingSpeed;
+				
+				if(velY <= -3){
+					jumping = false;
+				}
+			}
+		}
+
 	}
 
 }
