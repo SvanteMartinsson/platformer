@@ -28,7 +28,8 @@ public class Main extends Canvas{
 		Window window = new Window(this, TITLE, WIDTH, HEIGHT);
 		this.createBufferStrategy(3);
 		bs = this.getBufferStrategy();
-		handler.addObject(new Player(100, 100, Color.green, 32, 75));
+		handler.addObject(new Player(200, 100, Color.green, 32, 75, handler, ID.Player));
+		handler.addEnv(new Stone(0, 600, 900, 30, ID.Env));
 		gameLoop();
 	}
 	
@@ -68,7 +69,7 @@ public class Main extends Canvas{
 	 * Updates everything
 	 */
 	public void update(){
-		
+		handler.updateObjects();
 	}
 
 }

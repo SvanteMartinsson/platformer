@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  * 
@@ -9,14 +10,16 @@ import java.awt.Graphics;
 public abstract class AliveObjects {
 	
 	protected int hp;
-	protected int velX;
-	protected int velY;
+	protected double velX;
+	protected double velY;
 	protected int x;
 	protected int y;
 	protected Color color;
 	protected int width;
 	protected int height;
+	protected ID id;
 	
+	public abstract Rectangle getBounds();
 	public abstract void update();
 	public abstract void render(Graphics g);
 	
@@ -26,13 +29,13 @@ public abstract class AliveObjects {
 	public void setHp(int hp) {
 		this.hp = hp;
 	}
-	public int getVelX() {
+	public double getVelX() {
 		return velX;
 	}
 	public void setVelX(int velX) {
 		this.velX = velX;
 	}
-	public int getVelY() {
+	public double getVelY() {
 		return velY;
 	}
 	public void setVelY(int velY) {
