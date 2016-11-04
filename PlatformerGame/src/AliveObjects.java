@@ -18,12 +18,11 @@ public abstract class AliveObjects {
 	protected int width;
 	protected int height;
 	protected ID id;
-	protected boolean jumping;
+	protected boolean canJump = false;
 	
 	public abstract Rectangle getBounds();
 	public abstract void update();
 	public abstract void render(Graphics g);
-	public abstract void jump();
 	
 	public int getHp() {
 		return hp;

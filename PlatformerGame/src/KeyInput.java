@@ -22,14 +22,8 @@ public class KeyInput extends KeyAdapter{
 				if(key == KeyEvent.VK_A){
 					object.velX = -2;
 				}
-				if(key == KeyEvent.VK_W){
-					object.velY = -2;
-				}
-				if(key == KeyEvent.VK_S){
-					object.velY = 2;
-				}
 				if(key == KeyEvent.VK_SPACE){
-					object.jumping = true;
+					object.canJump = true;
 				}
 			}
 		}
@@ -49,6 +43,7 @@ public class KeyInput extends KeyAdapter{
 				if(key == KeyEvent.VK_A){
 					object.velX = 0;
 				}
+				
 			}
 		}
 

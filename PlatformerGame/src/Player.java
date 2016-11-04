@@ -6,11 +6,13 @@ public class Player extends AliveObjects{
 
 	private double gravity = 1.02;
 
-	private int fallingSpeed = 0;
+	private int jumpSpeed = 15;
+	private float jumpTimer = 0;
 
 	private boolean isJumping;
-
-	private boolean isOnGround = false;
+	private boolean isOnGround = true;
+	private boolean canFall = false;
+	
 
 	Handler handler;
 
@@ -32,8 +34,6 @@ public class Player extends AliveObjects{
 		this.height = height;
 		this.handler = handler;
 		this.id = id;
-		velY = 1;
-		this.jumping = false;
 	}
 
 	/**
@@ -43,13 +43,29 @@ public class Player extends AliveObjects{
 		collision();
 		x += velX;
 		y += velY;
-
-
-
-		if(isOnGround){
+		
+		if(canJump){
+			isOnGround = false;
 			jump();
-		}else{
-			velY *= gravity;
+			jumpTimer += 1;
+			if(jumpTimer>=3){
+				jumpTimer = 0;
+				canJump = false;
+				canFall = true;
+				
+			}
+		}
+		
+		if(canFall){
+			System.out.println("In canFall");
+			falling();
+			if(isOnGround){
+				canFall = false;
+			}
+		}
+		
+		if(isOnGround){
+			velY = 0;
 		}
 	}
 
@@ -58,7 +74,10 @@ public class Player extends AliveObjects{
 			EnvironmentObjects object = handler.envObjects.get(i);
 			if(getBounds().intersects(object.getBounds()) && object.id == ID.Env){
 				isOnGround = true;
-				y =515;
+				y -= 30;
+			}else{
+				isOnGround = false;
+				canFall = true;
 			}
 		}
 	}
@@ -79,22 +98,19 @@ public class Player extends AliveObjects{
 		return new Rectangle(x, y, width, height);
 
 	}
-
-
-
-	public void jump() {
-		if(jumping){
-			System.out.println("test");
-			while(jumping){
-				fallingSpeed += gravity*-1;
-				velY = fallingSpeed;
-				
-				if(velY <= -3){
-					jumping = false;
-				}
-			}
+	
+	public void jump(){
+		if(canJump){
+			velY-=jumpSpeed;
 		}
-
+	}
+	
+	public void falling(){
+		System.out.println("In fall method");
+		if(canFall){
+			System.out.println("In jump");
+			velY += jumpSpeed;
+		}
 	}
 
 }
