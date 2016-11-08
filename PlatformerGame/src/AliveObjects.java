@@ -18,7 +18,7 @@ public abstract class AliveObjects {
 	protected int width;
 	protected int height;
 	protected ID id;
-	protected boolean canJump = false;
+	protected boolean jumping = false;
 	
 	public abstract Rectangle getBounds();
 	public abstract void update();

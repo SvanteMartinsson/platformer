@@ -23,7 +23,7 @@ public class KeyInput extends KeyAdapter{
 					object.velX = -2;
 				}
 				if(key == KeyEvent.VK_SPACE){
-					object.canJump = true;
+					object.jumping = true;
 				}
 			}
 		}
