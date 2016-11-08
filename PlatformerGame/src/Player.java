@@ -12,7 +12,7 @@ public class Player extends AliveObjects{
 	private boolean isJumping;
 	private boolean isOnGround = false;
 	private boolean canFall = false;
-
+	
 
 	Handler handler;
 
@@ -43,9 +43,9 @@ public class Player extends AliveObjects{
 		collision();
 		x += velX;
 		y += velY;
-
-
-
+		
+		
+		
 		if(isOnGround){
 			velY = 0;
 		}else if(isOnGround == false){
@@ -60,23 +60,23 @@ public class Player extends AliveObjects{
 		for(int i = 0; i<handler.envObjects.size(); i++){
 			EnvironmentObjects object = handler.envObjects.get(i);
 			if(getBounds().intersects(object.getBounds()) && object.id == ID.Ground){
-				System.out.println("collision");
 				isOnGround = true;
-				velY=0;
-
-			}else if(getBounds().intersects(object.getBounds()) && object.id == ID.Env){
+				
+			}
+			
+			if(getBounds().intersects(object.getBounds()) && object.id == ID.Env){
 				isOnGround = true;
-				if(x<object.x && y>object.y){
+				if(x<object.x && y<object.y){
 					velX*=-1;
 				}
 				if(x>object.x && y>object.y){
 					velX*=-1;
 				}
-			}else{
+			}
+			
+			if(!getBounds().intersects(object.getBounds()) && object.id == ID.Ground && !getBounds().intersects(object.getBounds()) && object.id == ID.Env){
 				isOnGround = false;
 			}
-
-
 		}
 	}
 
@@ -96,13 +96,13 @@ public class Player extends AliveObjects{
 		return new Rectangle(x, y, width, height);
 
 	}
-
+	
 	public void jump(){
 		if(canJump){
 			velY-=jumpSpeed;
 		}
 	}
-
+	
 	public void falling(){
 		System.out.println("In fall method");
 		if(canFall){
