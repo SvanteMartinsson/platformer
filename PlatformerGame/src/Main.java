@@ -30,7 +30,7 @@ public class Main extends Canvas{
 		bs = this.getBufferStrategy();
 		this.addKeyListener(new KeyInput(handler));
 		handler.addObject(new Player(200, 400, Color.green, 32, 75, handler, ID.Player));
-		handler.addEnv(new Stone(0, 600, 900, 30, ID.Env));
+		handler.addEnv(new Stone(0, 600, 900, 30, ID.Ground));
 		handler.addEnv(new Stone(400, 570, 20, 10, ID.Env));
 		gameLoop();
 	}

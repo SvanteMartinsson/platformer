@@ -1,6 +1,7 @@
 
 public enum ID {
 	Player,
-	Env;
+	Env,
+	Ground;
 	
 }
