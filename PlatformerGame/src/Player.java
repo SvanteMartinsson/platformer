@@ -11,7 +11,9 @@ public class Player extends AliveObjects{
 
 
 
+
 	private boolean isOnGround;
+
 
 
 
@@ -47,32 +49,41 @@ public class Player extends AliveObjects{
 		x += velX;
 		y += velY;
 
-
+		
+		
+		
 
 		if(isOnGround){
 			velY = 0;
-		}else{
-			falling();
 		}
 		
-		if(jumping){
-			if(jumpTimer<50){
-				jumpTimer++;
-				jumping();
-				System.out.println("asdfasdf");
-			}else{
-				falling();
-			}
-			
+
+			velY*=gravity;
 		}
-	}
+	
 
 	public void collision(){
 		for(int i = 0; i<handler.envObjects.size(); i++){
 			EnvironmentObjects object = handler.envObjects.get(i);
+			if(getBounds().intersects(object.getBounds()) && object.id == ID.Ground){
+				isOnGround = true;
+				
+			}
+			
 			if(getBounds().intersects(object.getBounds()) && object.id == ID.Env){
 				isOnGround = true;
-				jumping = false;
+
+				if(x<object.x && y<object.y){
+					velX*=-1;
+				}
+				if(x>object.x && y>object.y){
+					velX*=-1;
+				}
+			}
+			
+			if(!getBounds().intersects(object.getBounds()) && object.id == ID.Ground && !getBounds().intersects(object.getBounds()) && object.id == ID.Env){
+				isOnGround = false;
+
 			}
 		}
 	}
